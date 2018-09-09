@@ -1,0 +1,32 @@
+html, body {
+  //background-color: white;
+  min-width: 700px;
+}
+
+@import '~react-md/src/scss/react-md';
+$hd-primary-color: #0052CC;
+
+$md-light-theme: true; // optional for light theme
+$md-primary-color: $hd-primary-color;
+$md-secondary-color: $md-deep-orange-a-200;
+$md-toolbar-height: 55px;
+$md-drawer-desktop-mini-width: 55px;
+$md-drawer-desktop-mini-item-padding: 18px;
+$md-drawer-desktop-width: 230px;
+
+@include react-md-everything;
+
+.toolbar-shadow {
+  //box-schadow: none;
+  -webkit-box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.3);
+  -moz-box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.3);
+  box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.3);
+}
+
+.toolbar-avatar {
+  width: 36px;
+  height: 36px;
+}
+.m-icon {
+  font-size: 24px !important;
+}

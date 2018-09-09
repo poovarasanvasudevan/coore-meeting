@@ -35,7 +35,7 @@ module.exports = {
             {
               loader: 'css-loader',
               options: {
-                localIdentName: IS_DEV ? '[path]-[name]_[local]' : '[name]_[local]_[hash:5]', // [hash:base64]
+                localIdentName: '[local]', // [hash:base64]
                 modules: true,
                 sourceMap: IS_DEV
               }
@@ -56,7 +56,7 @@ module.exports = {
         })
       },
       {
-        test: /\.(eot|svg|ttf|woff|woff2)$/,
+        test: /\.(eot|svg|ttf|woff|woff2|png|jpg|jpeg|gif)$/,
         loader: 'file-loader'
       }
     ]

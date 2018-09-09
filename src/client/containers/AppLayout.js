@@ -1,49 +1,84 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
-import {Redirect, Route, Switch} from 'react-router-dom';
-import Paper from 'material-ui/Paper';
-
-import AppBar from 'containers/AppBar';
-import AppMenu from 'containers/AppMenu';
-import ModalsLayout from 'containers/ModalsLayout/ModalsLayout';
-import NotFound from 'containers/NotFound';
-import ServersPage from 'containers/ServersPage/ServersPage';
-import ProgressBar from 'components/ProgressBar';
+import {Button, DialogContainer, FontIcon, NavigationDrawer, SVGIcon} from 'react-md';
+import inboxListItems from '../components/Test'
+import AppBarAction from "../components/AppBarAction";
 
 export class AppLayout extends React.Component {
-  static propTypes = {
-    loading: PropTypes.bool.isRequired
-  };
 
-  render() {
-    const {loading} = this.props;
+    constructor() {
+        super();
+        this.navItems = inboxListItems.map((item) => {
+            if (item.divider) {
+                return item;
+            }
 
-    return (
-      <section>
-        <Paper zDepth={1} style={{position: 'fixed', width: '100%', zIndex: 10}}>
-          <AppBar>
-            <AppMenu />
-          </AppBar>
-          {loading && <ProgressBar />}
-        </Paper>
-        <section style={{paddingTop: 50}}>
-          <Switch>
-            <Route exact path="/" component={ServersPage} />
-            <Route exact path="/users" name="home-users" component={NotFound} />
-            <Redirect to="/" />
-          </Switch>
-        </section>
-        <ModalsLayout />
-      </section>
-    );
-  }
+            return {
+                ...item,
+                onClick: () => this.setPage(item.key, item.primaryText),
+            };
+        });
+
+        this.state = {
+            renderNode: null,
+            visible: false,
+            key: inboxListItems[0].key,
+            page: inboxListItems[0].primaryText,
+        };
+    }
+    setPage = (key, page) => {
+        this.navItems = this.navItems.map((item) => {
+            if (item.divider) {
+                return item;
+            }
+
+            return { ...item, active: item.key === key };
+        });
+
+        this.setState({ key, page });
+    };
+
+    show = () => {
+        this.setState({ visible: true });
+    };
+
+    hide = () => {
+        this.setState({ visible: false, renderNode: null });
+    };
+
+    handleShow = () => {
+        this.setState({ renderNode: document.getElementById('navigation-drawer-demo') });
+    };
+    render() {
+        const { visible, page, renderNode } = this.state;
+        return (
+            <section>
+
+                <NavigationDrawer
+                    renderNode={renderNode}
+                    navItems={this.navItems}
+                    mobileDrawerType={NavigationDrawer.DrawerTypes.TEMPORARY_MINI}
+                    tabletDrawerType={NavigationDrawer.DrawerTypes.PERSISTENT_MINI}
+                    desktopDrawerType={NavigationDrawer.DrawerTypes.PERSISTENT_MINI}
+                    toolbarTitle="Hello, World!"
+                    toolbarActions={<AppBarAction />}
+                    contentId="main-demo-content"
+                    toolbarClassName="toolbar-shadow"
+                    temporaryIcon={<FontIcon className="m-icon">menu</FontIcon>}
+                    persistentIcon={<FontIcon>arrow_back</FontIcon>}
+                    contentClassName="md-grid"
+                >
+                    <section className="md-text-container md-cell md-cell--12">
+                        <h1>Hello</h1>
+                    </section>
+                </NavigationDrawer>
+            </section>
+        );
+    }
 }
 
 function mapStateToProps(state) {
-  return {
-    loading: state.api.get('loading')
-  };
+    return {};
 }
 
 export default connect(mapStateToProps)(AppLayout);

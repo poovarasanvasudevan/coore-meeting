@@ -18,7 +18,7 @@ All notable changes to this project will be documented in this file. See [standa
 ### Features
 
 * update winston logger to v3 ([8005871](https://github.com/antonfisher/react-express-webpack/commit/8005871))
-* use components names as file names instead of index.js ([ac0465f](https://github.com/antonfisher/react-express-webpack/commit/ac0465f))
+* use components names as file names instead of AppBarAction.js ([ac0465f](https://github.com/antonfisher/react-express-webpack/commit/ac0465f))
 
 
 
